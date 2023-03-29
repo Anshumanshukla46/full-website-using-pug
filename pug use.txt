@@ -1,0 +1,170 @@
+doctype html
+html
+    head
+        style
+            include ../static/style.css 
+            
+    body 
+        h1 my site 
+        p welcome to my site 
+        script 
+            include ../static/index.js
+
+BOILER PLATE WITH INDENTATION
+
+| text = to show text use pipe
+.class
+#id
+#[a(href="/") Home ] for <a href="/">Home</a>
+
+
+//
+we will be using template inheritance of pug
+means what should be same basic layout 
+
+for that we will be having base.pug/home.pug/contact.pug like files
+
+now home.pug/contact.pug like files will extend the base.pug means whatever written in that we will layout is written we fill that
+
+now each and every block, style, script will be replaced
+
+INDENTATION IS SUPER IMPORTANT
+
+what is mongodb?
+NoSQL database
+document oriented open source, written in cpp
+
+document oriented - store in the form of document
+data store in the form of BSON (Binary Javascript Object Notation)
+
+while in the rdbms
+tables - collections(mongodb)
+rows - documents(mongodb)
+
+what is mongoD - host process - it is primary daemon so When you install and run MongoDB on your system, you typically start the mongod process first, which listens for incoming connections from MongoDB client applications and responds to their queries and commands.
+
+what is mongo - specific commond line shell that connects to specific instance of mongod.
+
+even if mongo is not their then we can use python, nodejs to connect to mongod 
+
+By default, MongoDB starts at port 27017
+
+
+we will use ubuntu to run the server
+now installed mongodb comminity version and then in c drive 
+make folder of data the db
+now move to C:\Program Files\MongoDB\Server\6.0\bin (copy this from that)
+advance system varabl > environment > path click > new > paste
+
+
+
+but for using all this use mongd in admin_shell and  mongoose in mongoose shell.
+
+MONGODB - commands
+
+CRUD OPERATIONS
+
+0. show dbs // to see all dbs's
+
+1. use mykart (now db will point to db)
+
+CREATING
+2. db.items.insertOne({
+    name:"Samsung",
+    price:1233,
+    rating:4,
+    qty:12,
+    sold:2
+}) (now this document will be added in database)
+
+3. db.items.insertMany(
+    [
+{
+    name:"iphone",
+    price:123213123,
+    rating:5,
+    qty:1212,
+    sold:212
+},
+{
+    name:"realme",
+    price:11233,
+    rating:3,
+    qty:112,
+    sold:12
+}
+    ]
+) // now the we can add multiple items at a time
+
+
+READING
+4. db.items.find() // now data will be shown even on closing the mongo in shell even 
+
+db.items.find(filterObject)
+
+here is no restriction for schema means in one of the object above we could add other one more as "isBig: true" then it will be shown in only one
+
+5. db.items.find({rating:3.5})
+getting items based on condition 
+
+6. getting rating greater than and equal 3.5
+db.items.find({rating:{$gte :3.5}})
+
+
+7. USING AND OPERATOR
+db.items.find({rating:{$lt :3.5}, price:{$gt:4000}}) // rating > 3.5 AND price > 4000
+
+8. using OR
+
+db.items.find(
+    {
+        $or:
+        [
+            {rating:{$lt:3.5}}, 
+            {price:{$gt:1232}}
+        ]
+    }
+)
+
+DELETING
+
+9. to get some filed  to show only
+db.items.find( { status: "A" } )
+
+The operation corresponds to the following SQL statement:
+
+SELECT * from inventory WHERE status = "A"
+
+
+10. deleting items from mongodb
+db.items.deleteOne({price:2200}) // will delete first entry check using db.items.find({price:2200})
+
+11. db.items.deleteMany({price:2200}) // all delete
+
+12.     CREATING COLLECTIONS
+
+can create another collection By
+show collections // all collections
+use items // using items now
+db.anotherCollection.insertOne({a:212}) // now one more collection will be created
+
+13. UPDATING ONE ITEM
+db.items.updateOne(selection, newValue)
+
+db.items.updateOne({name:"Moto"}, {$set:{price:2}})
+
+13. UPDATING MANY items
+
+db.items.updateMany({name:"Moto"}, {$set:{price:212}})
+
+
+
+USING MONGODB COMPASS WE CAN DO CRUD OPERATIONS IN GUI MANNER. (replacing mongo)
+BUT FOR THIS "mongd" should be running in admin_shell as that is the server (local)
+
+now for mongo have data folder then db inside it of local C
+
+
+as we are using mongodb and nodejs(express/pug) at different platform 
+so now for connecting this we would be install mongoose whihc will make the layer bet 
+mongodb and nodejs.
